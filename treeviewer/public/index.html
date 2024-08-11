@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Tree Viewer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="assets/Opal-Logo-Grey-Packaging-Systems.png" alt="Opal Logo" class="logo mr-2">
+        <span class="navbar-title">Asset Tree Viewer</span>
+    </a>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <!-- Action Buttons -->
+    <div class="fixed-actions">
+        <h3 class="actions-title">Actions</h3>
+        <form id="upload-form" class="form-inline d-flex flex-column">
+            <div class="form-group mb-2">
+                <input type="file" name="excelFile" id="excelFile" accept=".xlsx" class="form-control-file d-none">
+                <label for="excelFile" id="file-label" class="btn btn-primary" title="Choose an Excel file">Choose File</label>
+            </div>
+            <span id="file-name" class="mb-2">No file selected</span>
+            <button type="submit" id="upload-button" class="btn btn-success mb-2 hidden" title="Upload the selected file">Upload File</button>
+            <button type="button" id="open-modal-button" class="btn btn-secondary hidden" title="Change node colors">Change Node Colors</button>
+        </form>
+    </div>
+
+    <!-- Content Area -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-area">
+                <!-- Placeholder for no file selected message -->
+                <div id="placeholder" class="placeholder">
+                    <p>No File Selected</p>
+                </div>
+                <!-- SVG container for D3 tree -->
+                <svg width="960" height="800"></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Text Size Control -->
+<div class="text-size-control">
+    <input type="range" id="textSizeSlider" min="8" max="32" value="12" step="1">
+    <label for="textSizeSlider">Text Size</label>
+</div>
+
+<!-- Footer -->
+<footer class="mt-4 text-center">
+    <p>Powered by WorthyCode</p>
+</footer>
+
+<!-- Modal -->
+<div id="color-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Colors</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="color-pickers">
+                    <div class="color-picker">
+                        <label for="color-0">Node Level 1 Color:</label>
+                        <input type="color" id="color-0" class="form-control" value="#ff0000"> <!-- Default color -->
+                    </div>
+                    <div class="color-picker">
+                        <label for="color-1">Node Level 2 Color:</label>
+                        <input type="color" id="color-1" class="form-control" value="#00ff00"> <!-- Default color -->
+                    </div>
+                    <div class="color-picker">
+                        <label for="color-2">Node Level 3 Color:</label>
+                        <input type="color" id="color-2" class="form-control" value="#0000ff"> <!-- Default color -->
+                    </div>
+                    <div class="color-picker">
+                        <label for="color-3">Node Level 4 Color:</label>
+                        <input type="color" id="color-3" class="form-control" value="#ffff00"> <!-- Default color -->
+                    </div>
+                    <div class="color-picker">
+                        <label for="color-4">Node Level 5 Color:</label>
+                        <input type="color" id="color-4" class="form-control" value="#ff00ff"> <!-- Default color -->
+                    </div>
+                    <div class="color-picker">
+                        <label for="leaf-color">Leaf Node Color:</label>
+                        <input type="color" id="leaf-color" class="form-control" value="#00ffff"> <!-- Default color -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="apply-colors-button" class="btn btn-primary">Apply Colors</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+<script src="tree.js"></script>
+<script>
+    document.getElementById('excelFile').addEventListener('change', function() {
+        var fileName = this.files[0] ? this.files[0].name : 'No file selected';
+        document.getElementById('file-name').textContent = fileName;
+        document.getElementById('upload-button').classList.remove('hidden');
+        document.getElementById('open-modal-button').classList.remove('hidden');
+    });
+</script>
+</body>
+</html>
